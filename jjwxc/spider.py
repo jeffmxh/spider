@@ -81,7 +81,7 @@ def get_url_cookie(url, encoding='gbk'):
     time.sleep(5 + 5 * random.random())
     headers = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0",
-               "Cookie": "ispayuser=3384244-1; foreverreader=3384244; CNZZDATA30075907=cnzz_eid%3D1647796701-1511356436-http%253A%252F%252Fwww.jjwxc.net%252F%26ntime%3D1512101636; timeOffset_o=221; __cfduid=d2f7d71ef3e8765791a18d648591ecf541512122483; UM_distinctid=16011860350c5-0d05b781c802798-70216751-1fa400-160118603515f4; testcookie=yes; Hm_lvt_bc3b748c21fe5cf393d26c12b2c38d99=1511759494,1511798904,1511842068,1511842070; Hm_lpvt_bc3b748c21fe5cf393d26c12b2c38d99=1512122503; need_auth_checked=yexuan2955@sina.com%3B-1%3B1512122495837%3Busername%3Dyexuan2955@sina.com%3Bisneed%3Dfalse%3Bip%3D202.119.42.228%3Bipcount%3D0%3Busernamecount%3D0; clicktype=; nicknameAndsign=2%257E%2529%2524%25E9%25A3%258E%25E8%25BF%2587; token=MzM4NDI0NHw1NWQ4MjNhMDkzNzZlM2FkZTYwZjdiYjRiMWQxOWJiYXx8eWV4KioqKioqKkBzaW5hLmNvbXwzNzk3NzN8fDF8MzM4NDI0NHx85qyi6L%2BO5oKo77yM5pmL5rGf55So5oi3fDF8ZW1haWw%3D; sms_total=0"}
+               "Cookie": ""}
     r = requests.get(url, headers=headers)
 #     r.raise_for_status()
     r.encoding = encoding
