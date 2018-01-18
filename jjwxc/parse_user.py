@@ -3,6 +3,7 @@ import threading
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
+import argparse
 import re
 import os
 import time
@@ -89,7 +90,7 @@ def get_logger():
 def load_users(file_name):
     user_root_path = 'save/users/'
     if not os.path.exists(user_root_path):
-        os.mkdir(user_root_path)
+        os.makedirs(user_root_path)
     current_users = os.listdir(user_root_path)
     user_list = []
     with open(file_name, 'r') as f:
@@ -113,27 +114,27 @@ def parse_recent_table(soup):
 def parse_user(user_id, spider):
     user_root_path = 'save/users/'
     if not os.path.exists(user_root_path):
-        os.mkdir(user_root_path)
+        os.makedirs(user_root_path)
     # 订阅的作品
     recent_url = 'http://www.jjwxc.net/onereader_ajax.php?readerid={}&action=show_vipServer'.format(user_id)
     recent_soup = spider.get_url_soup(recent_url, encoding='utf-8')
     time.sleep(0.5 + random.random())
     recent_list = parse_recent_table(recent_soup)
     recent_list = ['\t'.join(x) for x in recent_list][1::2]
-    
+
     # 收藏的作品
     star_url = 'http://www.jjwxc.net/onereader_ajax.php?readerid={}&action=show_novelsa'.format(user_id)
     star_soup = spider.get_url_soup(star_url, encoding='utf-8')
     time.sleep(0.5 + random.random())
     star_result = parse_recent_table(star_soup)
     star_result = ['\t'.join(x) for x in star_result]
-    
+
     # 用户名
     user_href = 'http://www.jjwxc.net/onereader.php?readerid={}'.format(user_id)
     user_soup = spider.get_url_soup(user_href)
     time.sleep(0.5 + random.random())
     user_name = user_soup.find('span', attrs={"id":"favorite_reader"})['rel']
-    
+
     # 存储数据
     user_path = user_root_path + user_id + '/'
     os.mkdir(user_path)
@@ -143,10 +144,10 @@ def parse_user(user_id, spider):
     time.sleep(1 + 3 * random.random())
 
 
-def main():
+def main(file_path):
     spider = Spider()
     logger = get_logger()
-    TODO_users = load_users('users.txt')
+    TODO_users = load_users(file_path)
     users_count = len(TODO_users)
     for i, user in enumerate(TODO_users):
         try:
@@ -157,4 +158,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='用户抓取脚本说明')
+    parser.add_argument('-i', '--inpath', dest='input_path', nargs='?', default='',
+                        help='Name of the input txt file containing user list')
+    args = parser.parse_args()
+    main(args.input_path)
